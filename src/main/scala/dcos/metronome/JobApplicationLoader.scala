@@ -7,6 +7,7 @@ import java.time.Clock
 import controllers.AssetsComponents
 import com.typesafe.scalalogging.StrictLogging
 import dcos.metronome.api.v1.LeaderProxyFilter
+import dcos.metronome.api.v1.BasicAuthFilter
 import dcos.metronome.api.{ApiModule, ErrorHandler}
 import mesosphere.marathon.MetricsModule
 import mesosphere.marathon.core.async.ExecutionContexts
@@ -110,6 +111,7 @@ class JobComponents(context: Context)
   }
 
   override val httpFilters: Seq[EssentialFilter] = Seq(
+    new BasicAuthFilter(config),
     new LeaderProxyFilter(wsClient, jobsModule.schedulerModule.electionService, config)
   )
 

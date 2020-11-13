@@ -10,4 +10,6 @@ trait ApiConfig {
   def hostname: String
   def effectivePort: Int
   def hostnameWithPort: String
+
+  def basicAuthCreds: Option[(String,String)]
 }

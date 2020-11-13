@@ -208,6 +208,14 @@ class MetronomeConfig(configuration: Configuration) extends JobsConfig with ApiC
     configuration.getOptional[Int]("metronome.metrics.histogram.reservoir.reset.chucks")
 
   override def taskKillConfig: KillConfig = scallopConf
+
+  lazy val basicAuthUser: Option[String] = configuration.getOptional[String]("play.http.basicauth.username")
+  lazy val basicAuthPass: Option[String] = configuration.getOptional[String]("play.http.basicauth.password")
+  lazy val basicAuthCreds: Option[(String, String)] =
+    (basicAuthUser, basicAuthPass) match {
+      case (Some(user), Some(passw)) => Some((user, passw))
+      case _ => None
+    }
 }
 
 object MetronomeConfig {
